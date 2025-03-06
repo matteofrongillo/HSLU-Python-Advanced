@@ -12,7 +12,7 @@ class Person:
         print(f"Name: {self.__name}, Age: {self.__age}")
 
 class Address:
-    def __init__(self, zipcode, cityname):
+    def __init__(self, zipcode, cityname):  #constructor
         self.__zipcode = zipcode
         self.__cityname = cityname
 
