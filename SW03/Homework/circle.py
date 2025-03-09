@@ -2,28 +2,25 @@ import matplotlib.pyplot as plt
 import math
 
 class Circle:
-    def __init__(self, color, xPos, yPos, radius):
+    def __init__(self, color, xPos, yPos, radius): #constructor
         self.color = color
         self.xPos = xPos
         self.yPos = yPos
         self.radius = radius
 
     def resize(self, size):
-        self.radius = self.radius*size
+        self.radius *= size
         return "New radius: ", self.radius
     
-    def get_origin(self,x,y):
-        self.origin = []
-        self.origin.append(x + self.xPos)
-        self.origin.append(y + self.yPos)
-        return self.origin
-        
-    def set_origin(self,x,y):
-        self.origin[0] = x
-        self.origin[1] = y
-        print(f"New origin: {self.origin}")
+    def get_origin(self):
+        return (self.xPos, self.yPos)
+
+    def set_origin(self, x, y):
+        self.xPos = x
+        self.yPos = y
 
     def draw(self):
+        print(f"Circle: color={self.color}, center=({self.xPos}, {self.yPos}), radius={self.radius}")
         fig, ax = plt.subplots()
         circle = plt.Circle((self.xPos, self.yPos), self.radius, color=self.color, fill=False)
         ax.add_patch(circle)
@@ -38,6 +35,5 @@ class Circle:
         plt.show()
 
     def area(self):
-        area = round(3/4*self.radius**2*math.pi,2)
+        area = round(self.radius**2*math.pi,2)
         return area
-    
