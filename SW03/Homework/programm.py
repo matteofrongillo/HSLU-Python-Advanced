@@ -22,5 +22,4 @@ def test_shapes():
     print("Circle New Origin:", circ.get_origin())
     circ.draw()
 
-if __name__ == "__main__":
-    test_shapes()
+test_shapes()
