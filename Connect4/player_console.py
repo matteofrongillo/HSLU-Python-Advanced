@@ -58,7 +58,7 @@ class PlayerConsole(PlayerBase):
 
 if __name__ == '__main__':
 
-    board = [[' ' for _ in range(7)] for _ in range(7)]
+    board = [[' ' for _ in range(7)] for _ in range(6)]
     board[5][0] = GameToken.RED  # [Y][X]
     p = PlayerConsole(GameToken.YELLOW)
 

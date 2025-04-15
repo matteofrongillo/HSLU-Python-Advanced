@@ -7,8 +7,8 @@
 
 ### SW07
 
-* [ ] coordinator
-* [ ] game_logic
+* [X] coordinator
+* [X] game_logic
 
 ### SW08
 
@@ -16,5 +16,5 @@
 
 ### SW10
 
-* [ ] game_logic_cleint
+* [ ] game_logic_client
 * [ ] game_logic_server
