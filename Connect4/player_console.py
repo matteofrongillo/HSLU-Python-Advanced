@@ -4,31 +4,61 @@ from player_base import PlayerBase
 from game_state import GameState
 from game_token import GameToken
 from ansi import Ansi
-
+from display_console import DisplayConsole
+from input_console import Keys
 
 class PlayerConsole(PlayerBase):
-    def __init__(self, player: GameToken):  # Red or Yellow player
+    def __init__(self, player: GameToken):
         super().__init__(player)
 
-        # YOUR CODE HERE
-        # self._display = DisplayConsole() # use this class for console output
-        self._input = InputConsole() # use this class for console input
+        self._display = DisplayConsole()
+        self._input = InputConsole()
+        self._current_column = 0
 
     def play_turn(self) -> int:
-        # YOUR CODE HERE
-        # TODO: return desired column from user input (0..6) using
-        # use self._input to read keys, use self._output to draw current token position
-        pass
+        self._current_column = 0
+
+        # draws token
+        self._display.draw_token(self._current_column, -1, self._player)
+
+        while True:
+            key = self._input.read_key()
+            
+            if key == Keys.LEFT and self._current_column > 0:
+                # clears position
+                self._display.draw_token(self._current_column, -1, GameToken.EMPTY)
+                self._current_column -= 1
+                # draws at now position
+                self._display.draw_token(self._current_column, -1, self._player)
+            
+            elif key == Keys.RIGHT and self._current_column < 6:
+                # clears position
+                self._display.draw_token(self._current_column, -1, GameToken.EMPTY)
+                self._current_column += 1
+                # draws at now position
+                self._display.draw_token(self._current_column, -1, self._player)
+            
+            elif key == Keys.ENTER:
+                # clears top token
+                self._display.draw_token(self._current_column, -1, GameToken.EMPTY)
+                return self._current_column
+            
+            # emergency exit
+            elif key == Keys.ESC:
+                raise KeyboardInterrupt()
 
     def draw_board(self, board: list, state: GameState):
-        # YOUR CODE HERE
-        # TODO: draw grid with tokens using self._display
-        pass
-
+        self._display.draw_grid() # draws the grid
+        
+        # draws tokens
+        for y in range(6):
+            for x in range(7):
+                if board[y][x] != ' ':
+                    self._display.draw_token(x, y, board[y][x])
 
 if __name__ == '__main__':
 
-    board = [[' ' for _ in range(7)] for _ in range(6)]
+    board = [[' ' for _ in range(7)] for _ in range(7)]
     board[5][0] = GameToken.RED  # [Y][X]
     p = PlayerConsole(GameToken.YELLOW)
 

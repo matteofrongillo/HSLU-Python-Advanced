@@ -53,13 +53,13 @@ class InputConsole(InputBase):
                     return Keys.LEFT
                 elif key == b"M":
                     return Keys.RIGHT
-                elif ch == "\r":
-                    return Keys.ENTER
-                elif ch == "\n":
-                    return Keys.ENTER
-                elif ch == "\x03":
-                    raise KeyboardInterrupt()
-                return Keys.UNKNOWN
+            elif key == b"\r":
+                return Keys.ENTER
+            elif key == b"\x1b":
+                return Keys.ESC
+            elif key == b"\03":  # Ctrl+C
+                raise KeyboardInterrupt()  # Trigger a KeyboardInterrupt
+            return Keys.UNKNOWN
 
         else:
             fd = sys.stdin.fileno()

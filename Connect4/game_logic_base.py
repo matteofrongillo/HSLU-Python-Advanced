@@ -1,6 +1,7 @@
 from game_state import GameState
 from game_token import GameToken
 from drop_state import DropState
+from display_console import DisplayConsole
 
 
 class GameLogicBase:
@@ -33,4 +34,28 @@ class GameLogicBase:
         DropState: The state of the drop (e.g., okay, invalid position, column full).
 
         """
+        if column < 0 or column >= self.COLS:
+            return DropState.COLUMN_INVALID
+        
+        # Find the lowest empty row
+        row = -1
+        for r in range(self.ROWS):
+            if self._board[r][column] == GameToken.EMPTY:
+                row = r
+                break
+        
+        if row == -1:
+            return DropState.COLUMN_FULL
+
+        # Animate the drop
+        display = DisplayConsole()  # You might want to pass this as a parameter instead
+        for y in range(row + 1):
+            if y > 0:
+                display.draw_token(column, y-1, GameToken.EMPTY)  # Clear previous position
+            display.draw_token(column, y, player)  # Draw current position
+            time.sleep(0.1)  # Add a small delay for animation
+        
+        self._board[row][column] = player
+        return DropState.OK
+
         raise NotImplementedError("You need to subclass GameLogicBase to use move().")
