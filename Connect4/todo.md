@@ -12,8 +12,8 @@
 
 ### SW08
 
-* [ ] input_sensehat
-* [ ] display_sensehat
+* [X] input_sensehat
+* [X] display_sensehat
 
 ### SW10
 
